@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useNavigate, useSearchParams } from "react-router-dom";
 import qs from 'query-string'
-import { gradientBorder } from "../Shared/StyleJS/border";
+import { gradientBorder } from "../../Shared/StyleJS/border";
 
 const TagCard = ({ title, icon: Icon, selected }) => {
     const [params, setParams] = useSearchParams()

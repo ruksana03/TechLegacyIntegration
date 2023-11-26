@@ -1,7 +1,9 @@
 import { Helmet } from "react-helmet-async";
 import Container from "../../Components/Shared/Container";
-import Tags from "../../Components/AllTechTags/Tags";
-import HomeBanner from "../../Components/HomeBanner/HomeBanner";
+import Tags from "../../Components/HomeComponents/AllTechTags/Tags";
+import HomeBanner from "../../Components/HomeComponents/HomeBanner/HomeBanner";
+import FeaturedProducts from "../../Components/HomeComponents/FeaturedProducts/FeaturedProducts";
+
 
 const Home = () => {
     return (
@@ -21,7 +23,8 @@ const Home = () => {
 
                     {/*  Featured Products Section */}
                     <div className="col-span-7">
-                       <HomeBanner/>
+                       <div><HomeBanner/></div>
+                       <div><FeaturedProducts/></div>
                     </div>
 
                     {/* Trending Products Section:  */}

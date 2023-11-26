@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { gradientBorder } from "../Shared/StyleJS/border";
+import { gradientBorder } from "../../Shared/StyleJS/border";
 
 const BannerButton = () => {
     const bannerLinks = ['share', 'ourStory'];

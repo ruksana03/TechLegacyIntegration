@@ -6,8 +6,9 @@ import Dashboard from "../Pages/Dashboard/Dashboard";
 import DashboardLayout from "../Layout/DashboardLayout";
 import Login from "../Pages/Register/Login";
 import Register from "../Pages/Register/Register";
-import ShareUserPost from "../Components/HomeBanner/ShareUserPost";
-import TLIStory from "../Components/HomeBanner/TLIStory";
+import ShareUserPost from "../Components/HomeComponents/HomeBanner/ShareUserPost";
+import TLIStory from "../Components/HomeComponents/HomeBanner/TLIStory";
+
 
 const MainRouter = createBrowserRouter([
   {
