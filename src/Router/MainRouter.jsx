@@ -8,6 +8,8 @@ import Login from "../Pages/Register/Login";
 import Register from "../Pages/Register/Register";
 import ShareUserPost from "../Components/HomeComponents/HomeBanner/ShareUserPost";
 import TLIStory from "../Components/HomeComponents/HomeBanner/TLIStory";
+import Products from "../Pages/Products/Products";
+import ProductDetails from "../Pages/ProductDetails/ProductDetails";
 
 
 const MainRouter = createBrowserRouter([
@@ -38,6 +40,14 @@ const MainRouter = createBrowserRouter([
         path: 'register',
         element: <Register />,
       },
+      {
+        path:'products',
+        element:<Products/>
+      },
+      {
+        path:'product/:id',
+        element:<ProductDetails/>
+      }
     ],
   },
   {

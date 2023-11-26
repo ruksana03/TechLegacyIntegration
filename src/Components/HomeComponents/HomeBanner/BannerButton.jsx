@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import { gradientBorder } from "../../Shared/StyleJS/border";
 
 const BannerButton = () => {

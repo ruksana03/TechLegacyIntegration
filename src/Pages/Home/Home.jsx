@@ -3,7 +3,7 @@ import Container from "../../Components/Shared/Container";
 import Tags from "../../Components/HomeComponents/AllTechTags/Tags";
 import HomeBanner from "../../Components/HomeComponents/HomeBanner/HomeBanner";
 import FeaturedProducts from "../../Components/HomeComponents/FeaturedProducts/FeaturedProducts";
-
+import TrendingProducts from "../../Components/HomeComponents/TrendingProduct/TrendingProducts";
 
 const Home = () => {
     return (
@@ -23,13 +23,15 @@ const Home = () => {
 
                     {/*  Featured Products Section */}
                     <div className="col-span-7">
-                       <div><HomeBanner/></div>
+                       <div>
+                        <HomeBanner/>
+                        </div>
                        <div><FeaturedProducts/></div>
                     </div>
 
                     {/* Trending Products Section:  */}
-                    <div className="col-span-2 min-h-screen border-2 border-black">
-                        Trending Products Section
+                    <div className="col-span-2 border-[1px]">
+                        <TrendingProducts/>
                     </div>
 
                 </div>

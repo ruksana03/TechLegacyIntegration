@@ -7,7 +7,6 @@ const HomeBanner = () => {
         <div className="h-56 border-2 mt-2 rounded-lg shadow-md shadow-sky-900">
             <BannerButton/>
             <Outlet/>
-            
         </div>
     );
 };
