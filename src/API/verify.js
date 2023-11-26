@@ -20,7 +20,15 @@ export const storeUserInfo = async (user) => {
 
 // get token from server  
 export const getToken = async email => {
-    const { data } = await axiosSecure.post(`/jwt`, email)
-    console.log('Token:', data)
-    return data
-  }
+  const { data } = await axiosSecure.post('/jwt', email)
+  console.log('Token:', data)
+  return data
+};
+
+// remove token from browser 
+export const clearCookie = async () => {
+  const { data } = await axiosSecure.get('/logout')
+  console.log('Token gone?', data)
+  return data
+}
+

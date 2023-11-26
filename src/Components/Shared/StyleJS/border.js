@@ -1,8 +1,4 @@
-// export const noStyle = {
-//     border: 'none',
-//     outline: 'none',
-//     background: 'none',
-//   };
+
 export const noStyle = {
     border: 'none',
     outline: 'none',

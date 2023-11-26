@@ -6,6 +6,7 @@ import useAuth from "../../Hooks/useAuth";
 import toast from "react-hot-toast";
 import { Helmet } from "react-helmet-async";
 import { ImSpinner10 } from "react-icons/im";
+import { getToken } from "../../API/verify";
 
 const Login = () => {
     const { signIn,loading } = useAuth();
@@ -13,7 +14,7 @@ const Login = () => {
     const location = useLocation()
     const from = location?.state?.from?.pathname || '/'
 
-    // form submit handler
+    //Login form submit function
     const handleSubmit = async event => {
         event.preventDefault()
         const form = event.target
@@ -21,11 +22,10 @@ const Login = () => {
         const password = form.password.value
 
         try {
-            //2. User Login
             const result = await signIn(email, password)
-            console.log(result)
-            //5. get token
-            //   await getToken(result?.user?.email)
+
+            // code for token 
+            await getToken(result?.user?.email)
 
             navigate(from, { replace: true })
             toast.success('Login Successful')
@@ -91,7 +91,7 @@ const Login = () => {
                             ) : (
                                 'Continue'
                             )}
-                            Continue
+                            {/* Continue */}
                         </button>
                     </div>
                 </form>

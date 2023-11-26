@@ -12,7 +12,7 @@ import {
   updateProfile,
 } from 'firebase/auth'
 import { app } from '../firebase/firebase.config'
-// import { clearCookie } from '../api/auth'
+import { clearCookie } from '../API/verify'
 
 export const AuthContext = createContext(null)
 const auth = getAuth(app)
@@ -44,7 +44,7 @@ const AuthProvider = ({ children }) => {
 
   const logOut = async () => {
     setLoading(true)
-    // await clearCookie()
+    await clearCookie()
     return signOut(auth)
   }
 
