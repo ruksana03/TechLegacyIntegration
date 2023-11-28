@@ -17,12 +17,12 @@ const Home = () => {
                 <div className="grid grid-cols-12 gap-4 font-mono">
 
                     {/* all tags section  */}
-                    <div className="col-span-3">
+                    <div className="hidden lg:block lg:col-span-3">
                         <Tags/>
                     </div>
 
                     {/*  Featured Products Section */}
-                    <div className="col-span-7">
+                    <div className="col-span-8 lg:col-span-7">
                        <div>
                         <HomeBanner/>
                         </div>
@@ -30,7 +30,7 @@ const Home = () => {
                     </div>
 
                     {/* Trending Products Section:  */}
-                    <div className="col-span-2 border-[1px]">
+                    <div className="col-span-4 lg:col-span-2 border-[1px]">
                         <TrendingProducts/>
                     </div>
 

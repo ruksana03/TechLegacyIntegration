@@ -10,6 +10,8 @@ import ShareUserPost from "../Components/HomeComponents/HomeBanner/ShareUserPost
 import TLIStory from "../Components/HomeComponents/HomeBanner/TLIStory";
 import Products from "../Pages/Products/Products";
 import ProductDetails from "../Pages/ProductDetails/ProductDetails";
+import PrivateRoute from "./PrivateRoute";
+import { getSingleProduct } from "../API/products";
 
 
 const MainRouter = createBrowserRouter([
@@ -46,8 +48,9 @@ const MainRouter = createBrowserRouter([
       },
       {
         path:'product/:id',
-        element:<ProductDetails/>
-      }
+        element:<PrivateRoute><ProductDetails/></PrivateRoute>,
+        loader:({params})=>getSingleProduct(params.id),
+      },
     ],
   },
   {
