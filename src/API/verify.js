@@ -6,17 +6,18 @@ export const storeUserInfo = async (user) => {
   if (!user || !user.email) {
     return null;
   }
-
   const currentUser = {
+    name:user.displayName,
     email: user.email,
-    // role: 'TechEnthusiasts',
-    role: 'Admin',
+    role: 'TechEnthusiasts',
+    // role: 'Admin',
     status: 'Verified',
   };
 
   const { data } = await axiosSecure.put(`/users/${user.email}`, currentUser);
   return data;
 };
+
 
 // get token from server  
 export const getToken = async email => {
@@ -31,4 +32,23 @@ export const clearCookie = async () => {
   console.log('Token gone?', data)
   return data
 }
+
+// for user role 
+export const getUserRole = async email =>{
+  const {data} = await axiosSecure(`/user/email/${email}`)
+  return data.role;
+}
+
+
+// Send user info to database 
+export const updateUserRole = async ({email,role}) => {
+  const currentUser = {
+    email,
+    role,
+    status: 'Verified',
+  };
+  const { data } = await axiosSecure.put(`/users/update/${email}`, currentUser);
+  return data;
+};
+
 

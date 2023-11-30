@@ -30,7 +30,7 @@ const ProductCard = ({product}) => {
             </div>
             <div>
                 <Link
-                    to={`/product/${product._id}`}>
+                    to={`/product/${product?._id}`}>
                     <h1
                         className="font-extrabold border-[1px] border-black rounded-md cursor-pointer mt-2 shadow-md shadow-black px-2">
                         {product?.product_name}

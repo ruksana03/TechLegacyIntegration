@@ -9,6 +9,7 @@ import { formatDate } from "../../API/formatDate";
 
 const ProductDetails = () => {
     const product = useLoaderData();
+    console.log(product)
     return (
         <div className="font-mono">
             <Helmet>

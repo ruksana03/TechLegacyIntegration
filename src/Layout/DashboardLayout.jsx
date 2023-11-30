@@ -3,10 +3,16 @@ import NavbarDashboard from "../Components/Navbar/DashboardNavbar/NavbarDashboar
 
 
 const DashboardLayout = () => {
+    // const activeUser = useLoaderData();
+    // console.log('active USer:', activeUser)
     return (
-        <div>
-            <NavbarDashboard/>
-            <Outlet/>
+        <div className="relative min-h-screen md:flex">
+            <NavbarDashboard />
+            <div className='flex-1  md:ml-64'>
+                <div className='p-5'>
+                    <Outlet />
+                </div>
+            </div>
         </div>
     );
 };

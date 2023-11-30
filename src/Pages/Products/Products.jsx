@@ -3,7 +3,6 @@ import Tags from "../../Components/HomeComponents/AllTechTags/Tags";
 import { tagsList } from "../../Components/HomeComponents/AllTechTags/tagsList";
 import ProductCard from "../../Components/ProductsComponents/ProductCard";
 import { IoSearch } from "react-icons/io5";
-
 import Container from "../../Components/Shared/Container";
 import useFeaturedProducts from "../../Hooks/useFeaturedProducts";
 
