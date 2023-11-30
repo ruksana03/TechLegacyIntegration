@@ -32,17 +32,19 @@ const UserDataRow = ({ loginUser, refetch }) => {
                 <span className='relative'>{loginUser.role}</span>
             </td>
 
-            <button
-                onClick={() => setIsOpen(true)}
-                className='relative bg-red-950 px-4 py-2 rounded-md text-white my-4'
-                disabled={loginUser?.role == 'Moderator'}
-            >
-                {loginUser?.role !== 'Moderator' && (
+            <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
+                <button
+                    onClick={() => setIsOpen(true)}
+                    className='relative bg-red-950 px-4 py-2 rounded-md text-white my-4'
+                    disabled={loginUser?.role == 'Moderator'}
+                >
+                    {loginUser?.role !== 'Moderator' && (
 
-                    <button className="">Update Role</button>
+                        <button className="">Update Role</button>
 
-                )}
-            </button>
+                    )}
+                </button>
+            </td>
 
 
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>

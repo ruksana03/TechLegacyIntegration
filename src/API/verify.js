@@ -43,6 +43,7 @@ export const getUserRole = async email =>{
 // Send user info to database 
 export const updateUserRole = async ({email,role}) => {
   const currentUser = {
+    // name:user.displayName,
     email,
     role,
     status: 'Verified',

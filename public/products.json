@@ -1,51 +1,48 @@
 [
     {
-        "product_name": "Smartphone X",
-        "image": "https://i.ibb.co/GxDnG1q/phone-1.jpg",
-        "tags": [
-            "Smartphones",
-            "Gaming"
-        ],
-        "timestamp": "2023-11-24T12:30:00.000Z",
-        "vote": 10,
-        "description": "The latest and greatest smartphone with advanced features.",
-        "owner": {
-            "name": "Ruksana",
-            "image": "https://lh3.googleusercontent.com/a/ACg8ocLLw7MAEojV_zf_JriGGSmeUKJjM-Ng2uPAkba_j0o=s96-c",
-            "email": "ruksana01official@gmail.com"
-        }
+      "product_name": "Smartphone X",
+      "image": "https://i.ibb.co/GxDnG1q/phone-1.jpg",
+      "tags": ["Smartphones", "Gaming"],
+      "timestamp": "2023-11-24T12:30:00.000Z",
+      "vote": 10,
+      "description": "The latest and greatest smartphone with advanced features.",
+      "owner": {
+        "name": "Ruksana",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocLLw7MAEojV_zf_JriGGSmeUKJjM-Ng2uPAkba_j0o=s96-c",
+        "email": "ruksana01official@gmail.com"
+      },
+      "featured": "Make Featured",
+      "status":"pending"
     },
     {
-        "product_name": "Laptop Pro",
-        "image": "https://i.ibb.co/SvsSZL3/laptop-1.jpg",
-        "tags": [
-            "Laptops",
-            "Computer",
-            "Gaming"
-        ],
-        "timestamp": "2023-11-23T15:45:00.000Z",
-        "vote": 8,
-        "description": "A powerful laptop designed for professionals.",
-        "owner": {
-            "name": "Ruksana",
-            "image": "https://lh3.googleusercontent.com/a/ACg8ocLLw7MAEojV_zf_JriGGSmeUKJjM-Ng2uPAkba_j0o=s96-c",
-            "email": "ruksana01official@gmail.com"
-        }
+      "product_name": "Laptop Pro",
+      "image": "https://i.ibb.co/SvsSZL3/laptop-1.jpg",
+      "tags": ["Laptops", "Computer", "Gaming"],
+      "timestamp": "2023-11-23T15:45:00.000Z",
+      "vote": 8,
+      "description": "A powerful laptop designed for professionals.",
+      "owner": {
+        "name": "Ruksana",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocLLw7MAEojV_zf_JriGGSmeUKJjM-Ng2uPAkba_j0o=s96-c",
+        "email": "ruksana01official@gmail.com"
+      },
+      "featured": "Make Featured",
+      "status":"pending"
     },
     {
-        "product_name": "Camera Supreme",
-        "image": "https://i.ibb.co/wJ5K0xS/camera-2.jpg",
-        "tags": [
-            "Cameras",
-            "Drones"
-        ],
-        "timestamp": "2023-11-20T09:15:00.000Z",
-        "vote": 15,
-        "description": "Capture stunning moments with this top-of-the-line camera.",
-        "owner": {
-            "name": "Ruksana",
-            "image": "https://lh3.googleusercontent.com/a/ACg8ocLLw7MAEojV_zf_JriGGSmeUKJjM-Ng2uPAkba_j0o=s96-c",
-            "email": "ruksana01official@gmail.com"
-        }
+      "product_name": "Camera Supreme",
+      "image": "https://i.ibb.co/wJ5K0xS/camera-2.jpg",
+      "tags": ["Cameras", "Drones"],
+      "timestamp": "2023-11-20T09:15:00.000Z",
+      "vote": 15,
+      "description": "Capture stunning moments with this top-of-the-line camera.",
+      "owner": {
+        "name": "Ruksana",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocLLw7MAEojV_zf_JriGGSmeUKJjM-Ng2uPAkba_j0o=s96-c",
+        "email": "ruksana01official@gmail.com"
+      },
+      "featured": "Make Featured",
+      "status":"pending"
     }
-]
+  ]
+  
