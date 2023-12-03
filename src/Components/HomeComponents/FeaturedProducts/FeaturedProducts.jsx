@@ -1,10 +1,19 @@
-import useFeaturedProducts from "../../../Hooks/useFeaturedProducts";
+
+import useAllProducts from "../../../Hooks/useAllProducts";
 import Card from "./Card";
 
-const FeaturedProducts = () => {
-    const { FeaturedProducts, loading} = useFeaturedProducts();
+// import useAuth from "../../../Hooks/useAuth";
 
-    const sortedFeaturedProducts = [...FeaturedProducts].sort((a, b) => {
+const FeaturedProducts = () => {
+    const { AllProducts, loading ,refetch} = useAllProducts();
+    // const {user}= useAuth();
+      
+    const featuredProducts = AllProducts.filter(product => product.featured === 'Featured');
+    // console.log(AllProducts);
+    // console.log(featuredProducts);
+
+
+    const sortedFeaturedProducts = [...featuredProducts].sort((a, b) => {
         return new Date(b.timestamp) - new Date(a.timestamp);
     });
 
@@ -19,7 +28,7 @@ const FeaturedProducts = () => {
             {!loading && sortedFeaturedProducts?.length > 0 && (
                 <div className="">
                     {sortedFeaturedProducts.map((item) => (
-                        <Card key={item.id} item={item} />
+                        <Card key={item.id} item={item} refetch={refetch} />
                     ))}
                 </div>
             )}

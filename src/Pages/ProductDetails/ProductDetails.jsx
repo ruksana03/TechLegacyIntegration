@@ -41,11 +41,15 @@ const ProductDetails = () => {
                             </Link>
                             <p className="mt-2">{product?.description}</p>
                             <div className="flex justify-between">
-                                <div>
-                                    {
-                                        product?.tags?.map((tag) => (<button className='border-[1px] border-black mr-2 my-2 px-2' key={tag}>{tag}</button>))
-                                    }
-                                </div>
+                            <div>
+                        {
+                            product?.tags?.map((tag) => (
+                                <button className='border-[1px] border-black mr-2 my-2 px-2' key={tag.id}>
+                                    {tag.text}
+                                </button>
+                            ))
+                        }
+                    </div>
                                 <div className="flex justify-start products-center gap-4">
                                     <BiSolidLike />
                                     <BiSolidDislike />
@@ -72,6 +76,7 @@ const ProductDetails = () => {
                     </div>
                 </div>
             </Container>
+
 
         </div>
     );

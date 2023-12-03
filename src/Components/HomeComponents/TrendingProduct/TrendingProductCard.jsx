@@ -1,6 +1,7 @@
 import { BiStreetView } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { HiCursorClick } from "react-icons/hi";
+import { formatDate } from "../../../API/formatDate";
 
 const TrendingProductCard = ({ trendingProduct }) => {
     return (
@@ -13,14 +14,21 @@ const TrendingProductCard = ({ trendingProduct }) => {
                             <BiStreetView />
                             <p className="text-xs">{trendingProduct.vote} Votes</p>
                         </div>
-                        <p className="border-[1px] mt-1 text-xs rounded-sm shadow-sm px-1 shadow-white"> {trendingProduct?.product_name}</p>
+                        <p className="border-[1px] mt-1 text-xs rounded-sm shadow-sm px-1 shadow-white"> {trendingProduct?.productName}</p>
                     </div>
                 </div>
 
                 <div>
-                    {
-                        trendingProduct?.tags?.map((tag) => (<button className='border-[1px] border-black mr-2 my-2 px-1 text-sm' key={tag}>{tag}</button>))
-                    }
+                <div>
+                <p>{formatDate(trendingProduct?.timestamp)}</p>
+                        {
+                            trendingProduct?.tags?.map((tag) => (
+                                <button className='border-[1px] border-black mr-2 my-2 px-2' key={tag.id}>
+                                    {tag.text}
+                                </button>
+                            ))
+                        }
+                    </div>
                     
                     <hr className="my-2" />
 
