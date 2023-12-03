@@ -18,7 +18,7 @@ const Home = () => {
 
                     {/* all tags section  */}
                     <div className="hidden lg:block lg:col-span-3">
-                        {/* <Tags/> */}
+                        <Tags/>
                     </div>
 
                     {/*  Featured Products Section */}
@@ -26,12 +26,12 @@ const Home = () => {
                        <div>
                         <HomeBanner/>
                         </div>
-                       <div><FeaturedProducts/></div>
+                       {/* <div><FeaturedProducts/></div> */}
                     </div>
 
                     {/* Trending Products Section:  */}
                     <div className="col-span-4 lg:col-span-2 border-[1px]">
-                        <TrendingProducts/>
+                        {/* <TrendingProducts/> */}
                     </div>
 
                 </div>
