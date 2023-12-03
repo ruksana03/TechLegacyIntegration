@@ -23,6 +23,7 @@ import Statistics from "../Pages/Dashboard/Admin/Statistics";
 import MngUsers from "../Pages/Dashboard/Admin/MngUsers";
 import MngCoupons from "../Pages/Dashboard/Admin/MngCoupons";
 import Default from "../Components/HomeComponents/HomeBanner/Default";
+import UpdateProduct from "../Pages/Dashboard/TechEnthusiasts/UpdateProduct";
 
 
 const MainRouter = createBrowserRouter([
@@ -71,7 +72,7 @@ const MainRouter = createBrowserRouter([
     ],
   },
   {
-    path: 'dashboard',
+    path: '/dashboard',
     element: <PrivateRoute>
       <DashboardLayout />
     </PrivateRoute>,
@@ -79,31 +80,38 @@ const MainRouter = createBrowserRouter([
     
     children: [
       {
-        path: 'dashboard',
+        path: '/dashboard',
         element: <Dashboard />,
     
       },
       {
-        path: 'dashboard/myProfile',
+        path: 'myProfile',
         element: <PrivateRoute>
           <MyProfile />
         </PrivateRoute>,
       },
 
       {
-        path: 'dashboard/postProduct',
+        path: 'postProduct',
         element: <PrivateRoute>
           <PostProduct />
         </PrivateRoute>
       },
       {
-        path: 'dashboard/myProducts',
+        path: 'myProducts',
         element: <PrivateRoute>
           <MyProducts />
         </PrivateRoute>
       },
       {
-        path: 'dashboard/mngProductReview',
+        path: 'updateProducts/:id',
+        element: <PrivateRoute>
+          <UpdateProduct />
+        </PrivateRoute>,
+         loader: ({ params }) => getSingleProduct(params.id),
+      },
+      {
+        path: 'mngProductReview',
         element: <PrivateRoute>
           <ModeratorRouter>
             <MngProductReview />
@@ -111,7 +119,7 @@ const MainRouter = createBrowserRouter([
         </PrivateRoute>
       },
       {
-        path: 'dashboard/mngProductReview',
+        path: 'mngReportedProduct',
         element: <PrivateRoute>
           <ModeratorRouter>
             <MngReportedContent />
@@ -119,7 +127,7 @@ const MainRouter = createBrowserRouter([
         </PrivateRoute>
       },
       {
-        path: 'dashboard/statistics',
+        path: 'statistics',
         element: <PrivateRoute>
           <AdminRoute>
             <Statistics />
@@ -127,7 +135,7 @@ const MainRouter = createBrowserRouter([
         </PrivateRoute>
       },
       {
-        path: 'dashboard/mngUsers',
+        path: 'mngUsers',
         element: <PrivateRoute>
           <AdminRoute>
             <MngUsers />
@@ -135,7 +143,7 @@ const MainRouter = createBrowserRouter([
         </PrivateRoute>
       },
       {
-        path: 'dashboard/mngCoupons',
+        path: 'mngCoupons',
         element: <PrivateRoute>
           <AdminRoute>
             <MngCoupons />

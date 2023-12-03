@@ -1,20 +1,22 @@
+import { useLoaderData } from "react-router-dom";
+import UpdateProductForm from "../../../Components/DashboardCmp/UpdateProductCmp/UpdateProductForm";
 import { useState } from "react";
-import PostForm from "../../../Components/DashboardCmp/PostProductCmp/PostForm";
 import useAuth from "../../../Hooks/useAuth";
 import { Helmet } from "react-helmet-async";
 import { uploadImage } from "../../../API/uploadImage";
 import toast from "react-hot-toast";
 import { useNavigate } from 'react-router-dom'
-import { addProduct } from "../../../API/products";
+import { updateProductInfo } from "../../../API/products";
 
-
-const PostProduct = () => {
+const UpdateProduct = () => {
+    const productForUpdate = useLoaderData();
     const [loading, setLoading] = useState(false)
     const [uploadButtonText, setUploadButtonText] = useState('Upload Image')
     const { user } = useAuth();
     const navigate = useNavigate()
 
-    const [tags, setTags] = useState([]);
+    const [tags, setTags] = useState(productForUpdate.tags || []);
+
     const [suggestions, setSuggestions] = useState([
         { id: '1', text: 'Smartphones' },
         { id: '2', text: 'Laptops' },
@@ -36,42 +38,36 @@ const PostProduct = () => {
 
     console.log(tags)
 
-    const handleFormSubmit = async (e) => {
+
+    const handleUpdateFormSubmit = async (e) => {
         setLoading(true);
-    
+
         e.preventDefault();
         const form = e.target;
         const productName = form.productName.value;
-        const image = form.image.files[0];
-        const image_url = await uploadImage(image);
+        const image = form.image.files[0]
+        const image_url = await uploadImage(image)
         const description = form.description.value;
-        const owner = {
-            name: user?.displayName,
-            image: user?.photoURL,
-            email: user?.email,
-        };
+
         const productTags = tags;
-    
+
         const externalLinks = form.externalLinks.value;
-        const product = {
+        const updatedProduct = {
             productName,
-            image: image_url?.data?.display_url,
-            description,
-            owner,
             tags: productTags,
-            externalLinks,
-            vote: 0,
-            featured: 'Make Featured',
-            status: 'pending',
+            description,
+            image: image_url?.data?.display_url,
+            externalLinks:externalLinks
         };
-        console.log(product)
     
+      
+        console.log("updatedProduct",updatedProduct);
+
         try {
-            const data = await addProduct(product);
-            console.log(data);
-            setUploadButtonText('Uploaded!');
-            toast.success('Product Added!');
-            navigate('/dashboard/myProducts');
+            const data = await updateProductInfo(productForUpdate._id, updatedProduct);
+           console.log(data)
+           toast.success("product Updated successfully ")
+           navigate('/dashboard/myProducts');
         } catch (err) {
             console.log(err);
             toast.error(err.message);
@@ -79,28 +75,30 @@ const PostProduct = () => {
             setLoading(false);
         }
     };
-    
 
     const handleImageChange = image => {
         setUploadButtonText(image.name)
     }
+
     return (
         <div className="font-mono">
             <Helmet>
-                <title>TLI | Post Product</title>
+                <title>TLI | Update Product</title>
             </Helmet>
-            <PostForm
-                user={user}
-                handleFormSubmit={handleFormSubmit}
+
+            <UpdateProductForm
+                productForUpdate={productForUpdate}
+                loading={loading}
                 uploadButtonText={uploadButtonText}
-                handleImageChange={handleImageChange}
-                loading={loading} 
+                user={user}
                 tags={tags}
                 suggestions={suggestions}
+                handleImageChange={handleImageChange}
+                handleUpdateFormSubmit={handleUpdateFormSubmit}
                 handleDelete={handleDelete}
-                handleAddition={handleAddition}/>
+                handleAddition={handleAddition} />
         </div>
     );
 };
 
-export default PostProduct;
+export default UpdateProduct;

@@ -18,7 +18,7 @@ const Home = () => {
 
                     {/* all tags section  */}
                     <div className="hidden lg:block lg:col-span-3">
-                        <Tags/>
+                        {/* <Tags/> */}
                     </div>
 
                     {/*  Featured Products Section */}

@@ -13,7 +13,7 @@ const ProductDetails = () => {
     return (
         <div className="font-mono">
             <Helmet>
-                <title>TLI | {product?.product_name}</title>
+                <title>TLI | {product?.productName}</title>
             </Helmet>
             <Container>
                 <div className="grid grid-cols-12">
@@ -36,7 +36,7 @@ const ProductDetails = () => {
                                 to={`/product/${product._id}`}>
                                 <h1
                                     className="font-extrabold border-[1px] border-black rounded-md cursor-pointer mt-2 shadow-md shadow-black px-2">
-                                    {product?.product_name}
+                                    {product?.productName}
                                 </h1>
                             </Link>
                             <p className="mt-2">{product?.description}</p>

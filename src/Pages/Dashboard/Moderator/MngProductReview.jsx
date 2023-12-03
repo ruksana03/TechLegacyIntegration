@@ -5,11 +5,18 @@ import useAllProducts from "../../../Hooks/useAllProducts";
 
 
 const MngProductReview = () => {
-const { AllProducts, refetch } = useAllProducts();
+    const { AllProducts, refetch } = useAllProducts();
+
+    const sortedProducts = [...AllProducts].sort((a, b) => {
+        const statusOrder = { pending: 0, accepted: 1, rejected: 2 };
+        return statusOrder[a.status.toLowerCase()] - statusOrder[b.status.toLowerCase()];
+      });
+      
+      
 
     return (
         <>
-           <div className='container mx-auto px-4 sm:px-8 font-mono' >
+            <div className='container mx-auto px-4 sm:px-8 font-mono' >
                 <Helmet>
                     <title>TLI | Manage Products Review</title>
                 </Helmet>
@@ -49,13 +56,13 @@ const { AllProducts, refetch } = useAllProducts();
                                             scope='col'
                                             className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
                                         >
-                                            
+
 
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {AllProducts &&
+                                    {/* {AllProducts &&
                                         AllProducts?.map(eachProduct => (
                                             <ProductsDataRow
                                                 key={eachProduct._id}
@@ -63,7 +70,15 @@ const { AllProducts, refetch } = useAllProducts();
                                                 refetch={refetch}
                                                
                                             />
-                                        ))}
+                                        ))} */}
+
+                                    {sortedProducts.map((eachProduct) => (
+                                        <ProductsDataRow
+                                            key={eachProduct._id}
+                                            eachProduct={eachProduct}
+                                            refetch={refetch}
+                                        />
+                                    ))}
                                 </tbody>
                             </table>
                         </div>

@@ -8,8 +8,8 @@ const AdminMenu = () => {
             {
                 links.map((link, index) =>
                     <ol key={link}>
-                        <li >
-                            <Link to={`dashboard/${link}`}>{menuNames[index]}</Link>
+                        <li>
+                            <Link to={`/dashboard/${link}`}>{menuNames[index]}</Link>
                         </li>
                     </ol>)
             }
