@@ -2,14 +2,44 @@
 import { MdOutlineReportProblem } from "react-icons/md";
 import { BiSolidLike } from "react-icons/bi";
 import { BiSolidDislike } from "react-icons/bi";
+import { IoIosPeople } from "react-icons/io";
 import { Helmet } from "react-helmet-async";
 import { Link, useLoaderData } from "react-router-dom";
 import Container from "../../Components/Shared/Container";
 import { formatDate } from "../../API/formatDate";
+import { useState } from "react";
+import useAuth from "../../Hooks/useAuth";
+import useAllProducts from "../../Hooks/useAllProducts";
+import axiosSecure from "../../API/axiosSecure";
+import { gradientBorder } from "../../Components/Shared/StyleJS/border"
+
 
 const ProductDetails = () => {
+    const { user } = useAuth();
+    const { refetch } = useAllProducts();
     const product = useLoaderData();
-    console.log(product)
+    const [hasVoted, setHasVoted] = useState(false);
+    const isProductOwner = user && user.email === product?.owner?.email;
+
+    const handleVote = async (type) => {
+        // if (!user) {
+        //     navigate('/login');
+        //     return;
+        // }
+        if (hasVoted) {
+            console.log('You have already voted for this product.');
+            return;
+        }
+
+        try {
+            await axiosSecure.post(`/vote/${product._id}/${user?.email}/${type}`);
+            setHasVoted(true);
+            refetch();
+        } catch (error) {
+            console.error('Error recording vote:', error);
+        }
+    };
+
     return (
         <div className="font-mono">
             <Helmet>
@@ -32,28 +62,35 @@ const ProductDetails = () => {
                             <img className='object-cover h-full w-full group-hover:scale-110 transition' src={product?.image} alt="Featured" />
                         </div>
                         <div>
-                            <Link
-                                to={`/product/${product._id}`}>
-                                <h1
-                                    className="font-extrabold border-[1px] border-black rounded-md cursor-pointer mt-2 shadow-md shadow-black px-2">
-                                    {product?.productName}
-                                </h1>
-                            </Link>
+                            <h1
+                                className="font-extrabold border-[1px] border-black rounded-md cursor-pointer mt-2 shadow-md shadow-black px-2">
+                                {product?.productName}
+                            </h1>
+
                             <p className="mt-2">{product?.description}</p>
                             <div className="flex justify-between">
-                            <div>
-                        {
-                            product?.tags?.map((tag) => (
-                                <button className='border-[1px] border-black mr-2 my-2 px-2' key={tag.id}>
-                                    {tag.text}
-                                </button>
-                            ))
-                        }
-                    </div>
-                                <div className="flex justify-start products-center gap-4">
-                                    <BiSolidLike />
-                                    <BiSolidDislike />
-                                    <p>{product.vote}</p>
+                                <div>
+                                    {
+                                        product?.tags?.map((tag) => (
+                                            <button className='border-[1px] border-black mr-2 my-2 px-2' key={tag.id}>
+                                                {tag.text}
+                                            </button>
+                                        ))
+                                    }
+                                </div>
+                                <div className="flex justify-start items-center gap-4">
+                                    <button
+                                        onClick={() => handleVote('like')} disabled={isProductOwner}
+                                        className={isProductOwner ? 'cursor-not-allowed text-gray-400' : ''}>
+
+                                        <BiSolidLike />
+                                    </button>
+                                    <button
+                                        onClick={() => handleVote('dislike')} disabled={isProductOwner}
+                                        className={isProductOwner ? 'cursor-not-allowed text-gray-400' : ''}>
+                                        <BiSolidDislike />
+                                    </button>
+                                    <p className="flex justify-center items-center gap-1 border-[1px] px-1 " style={{ ...gradientBorder }}>{product.vote}<IoIosPeople /> </p>
                                 </div>
                                 <Link className="flex justify-between px-3 z-10 gap-2">
                                     <hr className="my-2" />

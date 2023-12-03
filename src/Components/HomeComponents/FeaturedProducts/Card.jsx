@@ -16,32 +16,25 @@ import {gradientBorder} from "../../Shared/StyleJS/border"
 const Card = ({ item,refetch }) => {
     const {user} =useAuth();
     const navigate = useNavigate();
-    // console.log(user)
     const [hasVoted, setHasVoted] = useState(false);
     const isProductOwner = user && user.email === item?.owner?.email;
 
     const handleVote = async (type) => {
         if (!user) {
-            // User is not logged in, redirect to the login page
             navigate('/login');
             return;
         }
         if (hasVoted) {
-            // User has already voted, handle accordingly (e.g., show a message)
             console.log('You have already voted for this product.');
             return;
         }
 
         try {
-            // Make a request to the server to record the user's vote
             await axiosSecure.post(`/vote/${item._id}/${user?.email}/${type}`);
-
-            // Update the state to indicate that the user has voted
             setHasVoted(true);
             refetch();
         } catch (error) {
             console.error('Error recording vote:', error);
-            // Handle the error (e.g., show an error message)
         }
     };
     return (
