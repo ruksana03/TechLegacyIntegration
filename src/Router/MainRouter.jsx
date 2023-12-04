@@ -24,6 +24,7 @@ import MngUsers from "../Pages/Dashboard/Admin/MngUsers";
 import MngCoupons from "../Pages/Dashboard/Admin/MngCoupons";
 import Default from "../Components/HomeComponents/HomeBanner/Default";
 import UpdateProduct from "../Pages/Dashboard/TechEnthusiasts/UpdateProduct";
+import ReviewForm from "../Components/ProductDetailsCmp/ReviewForm";
 
 
 const MainRouter = createBrowserRouter([
@@ -68,6 +69,13 @@ const MainRouter = createBrowserRouter([
           <ProductDetails />
         </PrivateRoute>,
         loader: ({ params }) => getSingleProduct(params.id),
+      },
+      {
+        path: 'reviewForm/:id',
+        element: <PrivateRoute>
+          <ReviewForm />
+        </PrivateRoute>,
+          loader: ({ params }) => getSingleProduct(params.id),
       },
     ],
   },

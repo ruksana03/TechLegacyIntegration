@@ -12,6 +12,10 @@ import useAuth from "../../Hooks/useAuth";
 import useAllProducts from "../../Hooks/useAllProducts";
 import axiosSecure from "../../API/axiosSecure";
 import { gradientBorder } from "../../Components/Shared/StyleJS/border"
+import toast from "react-hot-toast";
+import { MdOutlineReviews } from "react-icons/md";
+import ReviewModal from "../../Components/ProductDetailsCmp/ReviewModal";
+import Reviews from "../../Components/ProductDetailsCmp/Reviews";
 
 
 const ProductDetails = () => {
@@ -19,17 +23,18 @@ const ProductDetails = () => {
     const { refetch } = useAllProducts();
     const product = useLoaderData();
     const [hasVoted, setHasVoted] = useState(false);
+    let [isOpen, setIsOpen] = useState(false)
+
     const isProductOwner = user && user.email === product?.owner?.email;
 
-    const handleVote = async (type) => {
-        // if (!user) {
-        //     navigate('/login');
-        //     return;
-        // }
+    const handleProductVote = async (type) => {
+
         if (hasVoted) {
             console.log('You have already voted for this product.');
+            toast("you have already vote for this product")
             return;
         }
+        console.log('Making vote request with:', product._id, user?.email, type);
 
         try {
             await axiosSecure.post(`/vote/${product._id}/${user?.email}/${type}`);
@@ -38,6 +43,12 @@ const ProductDetails = () => {
         } catch (error) {
             console.error('Error recording vote:', error);
         }
+    };
+
+
+
+    const closeModal = () => {
+        setIsOpen(false);
     };
 
     return (
@@ -80,13 +91,13 @@ const ProductDetails = () => {
                                 </div>
                                 <div className="flex justify-start items-center gap-4">
                                     <button
-                                        onClick={() => handleVote('like')} disabled={isProductOwner}
+                                        onClick={() => handleProductVote('like')} disabled={isProductOwner}
                                         className={isProductOwner ? 'cursor-not-allowed text-gray-400' : ''}>
 
                                         <BiSolidLike />
                                     </button>
                                     <button
-                                        onClick={() => handleVote('dislike')} disabled={isProductOwner}
+                                        onClick={() => handleProductVote('dislike')} disabled={isProductOwner}
                                         className={isProductOwner ? 'cursor-not-allowed text-gray-400' : ''}>
                                         <BiSolidDislike />
                                     </button>
@@ -109,7 +120,19 @@ const ProductDetails = () => {
 
                     </div>
                     <div className="col-span-4 h-96 overflow-y-auto">
+                        <button
+                            onClick={() => setIsOpen(true)}
+                            className="flex justify-center w-1/2 items-center text-center bg-[#CDAA35] py-2 border-2 rounded-full mx-auto gap-4 text-xl">
+                            <MdOutlineReviews />
+                            Add Review
+                        </button>
+                        <ReviewModal closeModal={closeModal} isOpen={isOpen} product={product} />
 
+                        {/* Reviews Section start  */}
+                        <div className="border-[1px] border-black w-10/12 px-4 py-8 mx-auto max-h-screen overflow-y-auto scroll-smooth md:scroll-auto">
+                            <Reviews product={product}/>
+                        </div>
+                        {/* Reviews Section end */}
                     </div>
                 </div>
             </Container>
