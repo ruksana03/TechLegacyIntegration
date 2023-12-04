@@ -63,6 +63,8 @@ const ProductDetails = () => {
                 <title>TLI | {product?.productName}</title>
             </Helmet>
             <Container>
+            { product?.length === 0 && <p>No featured products available.</p>}
+
                 {
                     product? (
                         <div className="grid grid-cols-12">
