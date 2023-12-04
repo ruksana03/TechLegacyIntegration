@@ -36,4 +36,4 @@ Welcome to our Tech Discovery Platform, a vibrant community for discovering and 
    - Integration of a payment system, offering users the opportunity to unlock premium features or gain additional facilities through paid subscriptions.
 
 
-# Client Side Live Link :
+# Client Side Live Link : https://techlegacyintegration.web.app/

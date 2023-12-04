@@ -6,14 +6,24 @@ import { FcLikePlaceholder } from "react-icons/fc";
 import { useEffect, useState } from "react";
 import PayModal from "../../../Components/DashboardCmp/MyProfileCmp/PayModal";
 import axiosSecure from "../../../API/axiosSecure";
-
-
+import usePayment from "../../../Hooks/usePayment";
 
 const MyProfile = () => {
     const { user } = useAuth()
     const [role] = useUserRole()
     const [activeUser, setActiveUser] = useState(null);
     let [isOpen, setIsOpen] = useState(false)
+    const [subscribeUser, setSubscribeUser] = useState({});
+
+    const { AllPayments, loading, refetch } = usePayment();
+    
+    useEffect(() => {
+        const userPayment = AllPayments.find(payment => payment.email === user?.email);
+        if (userPayment) {
+            setSubscribeUser(userPayment);
+            // refetch();
+        }
+    }, [AllPayments, user]);
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -29,9 +39,6 @@ const MyProfile = () => {
         fetchUserData();
     }, [user]);
 
-
-    // console.log("active USer", activeUser)
-
     const [subscriptionInfo, setSubscriptionInfo] = useState({})
 
     useEffect(() => {
@@ -46,13 +53,10 @@ const MyProfile = () => {
         });
     }, [user, activeUser]);
 
-    // console.log("userID:", subscriptionInfo.userID);
-
     const closeModal = () => {
         setIsOpen(false);
+        refetch();
     };
-
-
 
     return (
         <div className='font-mono flex justify-start items-center h-screen mt-12 lg:mt-0'>
@@ -63,14 +67,16 @@ const MyProfile = () => {
                 <img
                     alt='profile'
                     src='https://i.ibb.co/frxfndF/Profile-cover.jpg'
-                    className='w-full mb-4 rounded-t-lg h-64' />
+                    className='w-full mb-4 rounded-t-lg h-64'
+                />
                 <div className='flex flex-col  justify-start p-4 -mt-16'>
                     <div className="flex gap-4 mb-4">
                         <img
                             alt='profile'
                             src={user.photoURL}
                             className='object-cover h-24 w-24  border-2 p-1'
-                            style={{ ...gradientBorder }} />
+                            style={{ ...gradientBorder }}
+                        />
                         <p className='mt-16 bg-[#102A43] text-white px-4 py-2 text-center rounded-full shadow-md shadow-slate-800'>
                             {role && role}
                         </p>
@@ -85,15 +91,29 @@ const MyProfile = () => {
                                     User Id2: {activeUser?._id}
                                 </p>
                             </div>
-                            <button
-                                onClick={() => setIsOpen(true)}
-                                className='flex justify-center items-center gap-8 bg-gradient-to-r from-[#E63B60] via-[#102A43] to-[#af4053]  px-10 py-1 rounded-lg text-white col-span-6 cursor-pointer hover:bg-[#af4053] mb-1'>
-                                <FcLikePlaceholder /> Subscribe by Pay BDT 500 +
-                            </button>
+
+                            <div className="grid grid-cols-12 gap-4">
+                                {/* Display payment information */}
+                                <div className="col-span-6">
+                                    {Object.keys(subscribeUser).length > 0 ? (
+                                        <button
+                                            className='flex justify-center items-center gap-8 bg-gradient-to-r from-[#E63B60] via-[#102A43] to-[#af4053]  px-10 py-1 rounded-lg text-white col-span-6 cursor-pointer hover:bg-[#af4053] mb-1'>
+                                            <FcLikePlaceholder /> {subscribeUser.status.toUpperCase()}
+                                        </button>
+                                    ) : (
+                                        <button
+                                            onClick={() => setIsOpen(true)}
+                                            className={`flex justify-center items-center gap-8 bg-gradient-to-r from-[#E63B60] via-[#102A43] to-[#af4053]  px-10 py-1 rounded-lg text-white col-span-6 cursor-pointer hover:bg-[#af4053] mb-1 ${
+                                                Object.keys(subscribeUser).length > 0 ? 'hidden' : ''
+                                            }`}>
+                                            <FcLikePlaceholder /> Subscribe by Pay BDT {subscriptionInfo.pay} +
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
                         </div>
                         <PayModal closeModal={closeModal} isOpen={isOpen} subscriptionInfo={subscriptionInfo} />
                         <hr className="border[1px] mx-6 my-3" style={{ ...gradientBorder }} />
-
                         <div className="grid grid-cols-12 gap-4">
                             <p className='flex col-span-6 '>
                                 User Name:
@@ -105,12 +125,10 @@ const MyProfile = () => {
                                 User Email:
                                 <span className='font-bold text-black '>{user.email}</span>
                             </p>
-
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     );
 };
