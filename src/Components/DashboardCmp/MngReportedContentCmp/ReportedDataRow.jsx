@@ -3,37 +3,43 @@ import {gradientBorder} from "../../Shared/StyleJS/border";
 import { RiDeleteBinFill } from "react-icons/ri";
 import { toast } from 'react-toastify';
 import { deleteSingleProduct } from "../../../API/products.js";
+import { deleteReport } from "../../../API/report.js";
 
 
-const handleReportedDataDelete = async ({reportedProduct,refetch}) => {
-    try {
-      await toast.promise(
-        deleteSingleProduct(reportedProduct?.productId),
-        {
-          loading: 'Deleting...',
-          success: (res) => {
-            if (res.deletedCount > 0) {
-              refetch();
-              return `${reportedProduct.productName} has been deleted`;
-            } else {
-              throw new Error(`Failed to delete ${reportedProduct.productName}`);
-            }
-          },
-          error: (error) => `Error: ${error.message || 'Something went wrong'}`,
+const ReportedDataRow = ({reportedProduct,refetch}) => {
+
+    const handleReportedDataDelete = async () => {
+        try {
+            await toast.promise(
+                deleteSingleProduct(reportedProduct?.productId),
+                {
+                    loading: 'Deleting...',
+                    success: (res) => {
+                        if (res.deletedCount > 0) {
+                            refetch();
+                            return `${reportedProduct.productName} has been deleted`;
+                        } else {
+                            throw new Error(`Failed to delete ${reportedProduct.productName}`);
+                        }
+                    },
+                    error: (error) => `Error: ${error.message || 'Something went wrong'}`,
+                }
+            );
+    
+            // After product deletion, delete the associated report
+            await deleteReport(reportedProduct._id);
+    
+            refetch();
+            toast.success("Product and Report Deleted Successfully");
+            console.log('Product and report deleted successfully.');
+        } catch (error) {
+            console.error('Error deleting product and report:', error);
+    
+            // Show an error toast
+            toast.error('Error deleting product and report. Please try again.');
         }
-      );
-      refetch();
-      toast.success("Product Deleted Successfully");
-      console.log('Product deleted successfully.');
-    } catch (error) {
-      console.error('Error deleting product:', error);
-  
-      // Show an error toast
-      toast.error('Error deleting product. Please try again.');
-    }
-  };
-
-const ReportedDataRow = ({reportedProduct}) => {
+    };
+    
     return (
         <tr>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>

@@ -63,7 +63,9 @@ const ProductDetails = () => {
                 <title>TLI | {product?.productName}</title>
             </Helmet>
             <Container>
-                <div className="grid grid-cols-12">
+                {
+                    product? (
+                        <div className="grid grid-cols-12">
                     <div className='col-span-8 flex flex-col  h-96 border-[1px] border-black px-4 py-2 mb-4'>
                         <div>
                             <div className='flex justify-between products-center gap-4 my-1'>
@@ -143,6 +145,12 @@ const ProductDetails = () => {
                         {/* Reviews Section end */}
                     </div>
                 </div>
+                    ): (
+                        <div className="flex justify-center items-center h-screen">
+                            <p className="text-2xl text-gray-500">No data available for this product ID.</p>
+                        </div>
+                    )
+                }
             </Container>
 
 
