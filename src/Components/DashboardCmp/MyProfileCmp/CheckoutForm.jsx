@@ -2,90 +2,104 @@ import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
 import { useEffect, useState } from 'react'
 import './CheckoutForm.css'
 
-import { ImSpinner9 } from 'react-icons/im'
+import axiosSecure from "../../../API/axiosSecure.js";
 import useAuth from '../../../Hooks/useAuth'
-import { createCheckoutSession } from '../../../API/payment'
+import toast from 'react-hot-toast';
+// import { createCheckoutSession } from '../../../API/payment'
 
 const CheckoutForm = ({ subscriptionInfo, closeModal }) => {
+  console.log(subscriptionInfo)
   const stripe = useStripe()
   const elements = useElements()
   const { user } = useAuth()
   const [cardError, setCardError] = useState('')
   const [clientSecret, setClientSecret] = useState('')
+  const [transactionId , setTransactionId] = useState('');
   const [processing, setProcessing] = useState(false)
 
-    // Frontend useEffect
+  //   // Frontend useEffect
     useEffect(() => {
-      if (subscriptionInfo.pay > 0) {
-          createCheckoutSession({ payAmount: subscriptionInfo.pay })
-              .then(data => {
-                  console.log('Data received from server:', data);
-                  setClientSecret(data.clientSecret);
-              })
-              .catch(error => {
-                  console.error('Error creating checkout session:', error);
-                  // Handle error as needed
-              });
-      }
+      axiosSecure.post('/create-checkout-session',{payAmount:subscriptionInfo.pay})
+      .then(res =>{
+        console.log(res.data.clientSecret)
+        setClientSecret(res.data.clientSecret)
+      })
   }, [subscriptionInfo]);
 
-  const handleSubmit = async event => {
-    event.preventDefault()
-
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+  
     if (!stripe || !elements) {
-      return
+      return;
     }
-
-    const card = elements.getElement(CardElement)
+  
+    const card = elements.getElement(CardElement);
     if (card === null) {
-      return
+      return;
     }
-
+  
     const { paymentMethod, error } = await stripe.createPaymentMethod({
       type: 'card',
       card,
-    })
-
+    });
+  
     if (error) {
-      console.log('error', error)
-      setCardError(error.message)
+      console.log('error', error);
+      setCardError(error.message);
     } else {
-      setCardError('')
-      console.log('payment method', paymentMethod)
+      setCardError('');
+      console.log('payment method', paymentMethod);
     }
-
-    setProcessing(true)
-
-    const { paymentIntent, error: confirmError } =
-      await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: card,
-          billing_details: {
-            email: user?.email,
-            name: user?.displayName,
+  
+    setProcessing(true);
+  
+    try {
+      const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(
+        clientSecret,
+        {
+          payment_method: {
+            card: card,
+            billing_details: {
+              email: user?.email,
+              name: user?.displayName,
+            },
           },
-        },
-      })
-
-    if (confirmError) {
-      console.log(confirmError)
-      setCardError(confirmError.message)
-    }
-
-    console.log('payment intent', paymentIntent)
-
-    if (paymentIntent.status === 'succeeded') {
-      // save payment information to the server
-      // Update room status in db
-      const paymentInfo = {
-        ...subscriptionInfo,
-        transactionId: paymentIntent.id,
-        date: new Date(),
+        }
+      );
+  
+      if (confirmError) {
+        console.log(confirmError);
+        setCardError(confirmError.message);
       }
+  
+      console.log('payment intent', paymentIntent);
+      if(paymentIntent.status === 'succeeded'){
+        console.log('transiactionId :', paymentIntent.id);
+        setTransactionId(paymentIntent.id);
 
-      setProcessing(false)
+        // save payment info to database 
+        const paymentInfo = {
+          email:user?.email,
+          payAmount: subscriptionInfo?.pay,
+          date: new Date(),
+          transactionId:paymentIntent.id,
+          status:'verified'
+        }
+        const res =await axiosSecure.post('/payments',paymentInfo)
+        console.log('payment saved',res)
+        toast.success('Payment successful!');
+        closeModal()
+      }
+  
+      // Now you can execute the last line of code here
+    } catch (error) {
+      console.error('Error confirming card payment:', error);
+      // Handle error as needed
+    } finally {
+      setProcessing(false);
     }
-  }
+  };
+  
 
   return (
     <>
@@ -117,14 +131,15 @@ const CheckoutForm = ({ subscriptionInfo, closeModal }) => {
           </button>
           <button
             type='submit'
-            disabled={!stripe || !clientSecret || processing}
+            disabled={!stripe || !clientSecret}
             className='inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-900 hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2'
           >
-            {processing ? (
+            {/* {processing ? (
               <ImSpinner9 className='m-auto animate-spin' size={24} />
             ) : (
               `Pay ${subscriptionInfo.price}$`
-            )}
+            )} */}
+            pay
           </button>
         </div>
       </form>
