@@ -1,5 +1,5 @@
 // import { FaArrowsToEye } from "react-icons/fa6";
-import { MdOutlineReportProblem } from "react-icons/md";
+// import { MdOutlineReportProblem } from "react-icons/md";
 import { BiSolidLike } from "react-icons/bi";
 import { BiSolidDislike } from "react-icons/bi";
 import { IoIosPeople } from "react-icons/io";
@@ -13,9 +13,12 @@ import useAllProducts from "../../Hooks/useAllProducts";
 import axiosSecure from "../../API/axiosSecure";
 import { gradientBorder } from "../../Components/Shared/StyleJS/border"
 import toast from "react-hot-toast";
-import { MdOutlineReviews } from "react-icons/md";
+import { MdOutlineReportProblem, MdOutlineReviews } from "react-icons/md";
 import ReviewModal from "../../Components/ProductDetailsCmp/ReviewModal";
 import Reviews from "../../Components/ProductDetailsCmp/Reviews";
+// import Report from "../../Components/ProductDetailsCmp/ReportModal";
+import ReportModal from "../../Components/ProductDetailsCmp/ReportModal";
+// import reportProduct from "../../Components/ProductDetailsCmp/reportProduct";
 
 
 const ProductDetails = () => {
@@ -24,6 +27,7 @@ const ProductDetails = () => {
     const product = useLoaderData();
     const [hasVoted, setHasVoted] = useState(false);
     let [isOpen, setIsOpen] = useState(false)
+    let [isReportModalOpen, setIsReportModalOpen] = useState(false)
 
     const isProductOwner = user && user.email === product?.owner?.email;
 
@@ -46,9 +50,11 @@ const ProductDetails = () => {
     };
 
 
-
     const closeModal = () => {
         setIsOpen(false);
+    };
+    const closeReportModalOpen = () => {
+        setIsReportModalOpen(false);
     };
 
     return (
@@ -105,16 +111,18 @@ const ProductDetails = () => {
                                 </div>
                                 <Link className="flex justify-between px-3 z-10 gap-2">
                                     <hr className="my-2" />
-
                                     <div className="group relative flex products-center">
-                                        <button className="text-2xl">
+                                        <button 
+                                        onClick={() => setIsReportModalOpen(true)} className="text-2xl">
                                             <MdOutlineReportProblem />
                                         </button>
                                         <span className="hidden group-hover:inline-block ml-2 text-black bg-white text-sm font-extrabold p-2 rounded-md">
                                             Report
                                         </span>
                                     </div>
+                                    <ReportModal closeReportModalOpen={closeReportModalOpen} isReportModalOpen={isReportModalOpen} product={product} />
                                 </Link>
+
                             </div>
                         </div>
 
@@ -130,7 +138,7 @@ const ProductDetails = () => {
 
                         {/* Reviews Section start  */}
                         <div className="border-[1px] border-black w-10/12 px-4 py-8 mx-auto max-h-screen overflow-y-auto scroll-smooth md:scroll-auto">
-                            <Reviews product={product}/>
+                            <Reviews product={product} />
                         </div>
                         {/* Reviews Section end */}
                     </div>

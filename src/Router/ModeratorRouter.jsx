@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom'
-import Loader from '../components/Shared/Loader'
 import useUserRole from '../Hooks/useUserRole'
+import Loader from '../Components/Shared/Loader'
 
 const ModeratorRouter = ({ children }) => {
   const [role, isLoading] = useUserRole()

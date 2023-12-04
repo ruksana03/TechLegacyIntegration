@@ -5,12 +5,12 @@ import useAuth from '../../Hooks/useAuth';
 import { gradientBorder } from '../Shared/StyleJS/border'
 import { addReview } from '../../API/review';
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 // import { ImSpinner10 } from 'react-icons/im';
 
 const ReviewModal = ({ isOpen, closeModal, product }) => {
     const { user } = useAuth();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const [loading, setLoading] = useState(false)
     const handleReview = async (e) => {
         setLoading(true);
